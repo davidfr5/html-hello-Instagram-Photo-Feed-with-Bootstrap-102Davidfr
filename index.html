@@ -3,32 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feed de Fotos</title>
+    <title>Instagram Feed</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #imageGallery {
+            display: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+            background: #f8f9fa;
+        }
+        #imageGallery img {
+            height: 200px;
+            margin: 5px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="feed">
-        <div><h1>Instagram Feed Photos</h1></div>
-        <div class="post">
-            <h3>Real Madrid VS Barcelona <span class="date">12/21</span></h3>
-            <img src=".vscode/vs170419-0211.jpg" alt="Clasico">
-            <p>El partido del finde</p>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light px-3 bg-secondary bg-gradient">
+        <a class="navbar-brand"><strong>Instagram</strong></a>
+        <div>
+            <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#postModal">Create a new post</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    &#128295
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Accessibility</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#">Close</a></li>  
+                </ul>
+            </div>
         </div>
-        <div class="post">
-            <h3>Kachow <span class="date">9/22</span></h3>
-            <img src=".vscode/f1.jpg" alt="F1">
-            <p>Carrera en Barein</p>
+    </nav>
+
+    <!-- Botones de cambio entre las pestañas de IMG y Publicaciones -->
+    <div class="container mt-3 text-center">
+        <button class="btn btn-primary me-2" onclick="mostrarImagenes()">Ver Imágenes</button>
+        <button class="btn btn-secondary" onclick="mostrarPublicaciones()">Ver Publicaciones</button>
+    </div>
+
+    <!-- Galería de imágenes -->
+    <div id="imageGallery" class="container mt-3 text-center"></div>
+
+    <!-- Contenedor de publicaciones -->
+    <div class="container mt-4" id="feed">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card post">
+                    <div class="card-header d-flex justify-content-between">
+                        <strong>F1!</strong>
+                        <span>05/03/23</span>
+                    </div>
+                    <img src=".vscode/f1.jpg" class="card-img-top image" alt="f1 Image">
+                    <div class="card-body">
+                        <p><strong>204 Likes</strong></p>
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="post">
-            <h3>Come on Eagles! <span class="date">12/22</span></h3>
-            <img src=".vscode/nfl.jpg" alt="Super bowl">
-            <p></p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card post">
+                    <div class="card-header d-flex justify-content-between">
+                        <strong>F1!</strong>
+                        <span>05/03/23</span>
+                    </div>
+                    <img src=".vscode/pizza.jpg" class="card-img-top image" alt="pizza Image">
+                    <div class="card-body">
+                        <p><strong>500 Likes</strong></p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="post">
-            <h3>Comida deliciosa <span class="date">04/24</span></h3>
-            <img src=".vscode/pizza.jpg" alt="Comida deliciosa">
-            <p>De mis cenas favoritas, simple y buenisimo</p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card post">
+                    <div class="card-header d-flex justify-content-between">
+                        <strong>F1!</strong>
+                        <span>05/03/23</span>
+                    </div>
+                    <img src=".vscode/nfl.jpg" class="card-img-top image" alt="nfl Image">
+                    <div class="card-body">
+                        <p><strong>204 Likes</strong></p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Modal para crear publicación -->
+    <!-- Es un a pagina diferente auqnue este dentro del mismo html , CUIDADO! -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Create a new post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="imageUpload" class="form-label">Upload an image</label>
+                            <input type="file" class="form-control" id="imageUpload">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postText" class="form-label">Description</label>
+                            <textarea class="form-control" id="postText"  placeholder="Write something..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JS funcion de botones para ver las img o las publicaciones-->
+    <script>
+        function mostrarImagenes() {
+            document.getElementById('feed').style.display = 'none';
+            document.getElementById('imageGallery').style.display = 'block';
+            let gallery = document.getElementById('imageGallery');
+            gallery.innerHTML = '';
+            document.querySelectorAll('.image').forEach(img => {
+                let newImg = document.createElement('img');
+                newImg.src = img.src;
+                newImg.alt = img.alt;
+                gallery.appendChild(newImg);
+            });
+        }
+        
+        function mostrarPublicaciones() {
+            document.getElementById('feed').style.display = 'block';
+            document.getElementById('imageGallery').style.display = 'none';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
